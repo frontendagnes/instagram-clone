@@ -5,21 +5,22 @@
     padding-top: 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid #d3d3d3;
+    background-color: #ffffff;
 }
 .header__search{
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f5f3f3;
+    background-color: #fafafa;
     border-radius: 5px;
     padding: 5px 10px;
-    border: 1px solid #d3d3d3;
+    border: 1px solid #fafafa;
 }
 .header__search > input{
     border: none;
     outline-width: 0;
     padding: 5px 10px;
-    background-color: #f5f3f3;
+    background-color: #fafafa;
 }
 .header__right {
     display: flex;

@@ -2,11 +2,11 @@ import React from "react";
 import "./Header.css";
 // icons material-ui
 import SearchIcon from "@material-ui/icons/Search";
-import HomeIcon from '@material-ui/icons/Home';
-import SendIcon from '@material-ui/icons/Send';
-import ExploreIcon from '@material-ui/icons/Explore';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import Avatar from '@material-ui/core/Avatar';
+import HomeIcon from "@material-ui/icons/Home";
+import SendIcon from "@material-ui/icons/Send";
+import ExploreIcon from "@material-ui/icons/Explore";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import Avatar from "@material-ui/core/Avatar";
 
 function Header() {
   return (
@@ -25,19 +25,19 @@ function Header() {
       </div>
       <div className="header__right">
         <div className="header__option">
-            <HomeIcon fontSize="large"/>
+          <HomeIcon fontSize="large" />
         </div>
         <div className="header__option">
-            <SendIcon fontSize="large" />
+          <SendIcon fontSize="large" />
         </div>
         <div className="header__option">
-            <ExploreIcon fontSize="large" />
+          <ExploreIcon fontSize="large" />
         </div>
         <div className="header__option">
-            <FavoriteBorderIcon  fontSize="large" />
+          <FavoriteBorderIcon fontSize="large" />
         </div>
         <div className="header__option header__avatar">
-                <Avatar />
+          <Avatar src="http://placeimg.com/640/480/animals" />
         </div>
       </div>
     </div>
