@@ -1,11 +1,35 @@
-.postSender{
-
-}
 .postSender__uploadImage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    border: 1px solid #808080;
     background-color: #ffffff;
     padding: 20px 30px;
-    color: #808080
+    color: #808080;
+    width:100%;
 }
 .postSenedr__iconMessage{
     cursor: pointer;
+}
+.postSender__progress{
+    width: 100%;
+}
+.postSender__textInput{
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 5px;
+    outline-width: 0;
+    border: none;
+    background-color: #ebebeb;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.postSender__uploadImage > form > div >button{
+    color: #0095f6;
+    font-weight: 600;
+}
+
+.postSender__uploadImage > form > div >button:disabled{
+    color: #aad9f8;
 }

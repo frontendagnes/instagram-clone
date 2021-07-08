@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Post.css";
+// components
+import Comment from './Comment'
 //emoji picker
-import Picker, { SKIN_TONE_MEDIUM_DARK } from 'emoji-picker-react';
+// import Picker, { SKIN_TONE_MEDIUM_DARK } from 'emoji-picker-react';
+//database
+import db from "../../utility/firebase";
 // material-ui icones
 import Avatar from "@material-ui/core/Avatar";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
@@ -12,12 +16,39 @@ import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import SendIcon from "@material-ui/icons/Send";
 import Button from "@material-ui/core/Button";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
+
 function Post({ user, postId, title, timestamp, photo, profilePic }) {
   const [comment, setComment] = useState([]);
   const [input, setInput] = useState("");
 
+  useEffect(() => {
+    let comments;
+    if (postId) {
+      comments = db
+        .collection("posts")
+        .doc(postId)
+        .collection("comments")
+        .orderBy("timestamp", "asc")
+        .onSnapshot((snapshot) => {
+          setComment(snapshot.docs.map((doc) => doc.data()));
+        });
+    }
+    return () => {
+      comments();
+    };
+  }, [postId]);
 
-
+  const handlePostSender = (e) => {
+    e.preventDefault();
+    if (comment) {
+      db.collection("posts").doc(postId).collection("comments").add({
+        comment: input,
+        user: "Agnes",
+        timestamp: Date.now(),
+      });
+    }
+    setInput('')
+  };
   return (
     <div className="post">
       <div className="post__top">
@@ -39,10 +70,10 @@ function Post({ user, postId, title, timestamp, photo, profilePic }) {
               <FavoriteIcon />
             </IconButton>
             <IconButton className="post__option">
-              <ChatBubbleIcon  />
+              <ChatBubbleIcon />
             </IconButton>
             <IconButton className="post__option">
-              <SendIcon  />
+              <SendIcon />
             </IconButton>
           </div>
           <div className="post__optionsRight">
@@ -52,11 +83,20 @@ function Post({ user, postId, title, timestamp, photo, profilePic }) {
           </div>
         </div>
         <div className="post__title">
-          <p>{user}</p>
+          <p>{title && user}</p>
           <p>{title}</p>
         </div>
         <div className="post__comment">
-          <div className="post__comments"></div>
+          <div className="post__comments">
+  
+            {comment.map((item) => (
+              <Comment 
+                user={item.user}
+                comment={item.comment}
+              />
+            ))}
+
+          </div>
           <div className="post__sender">
             <InsertEmoticonIcon fontSize="large" />
             <input
@@ -64,7 +104,7 @@ function Post({ user, postId, title, timestamp, photo, profilePic }) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
             />
-            <Button disabled={input ? false : true}>ADD</Button>
+            <Button disabled={input ? false : true} onClick={handlePostSender}>ADD</Button>
           </div>
         </div>
       </div>

@@ -1,34 +1,20 @@
 import React, { useState } from "react";
 import "./PostSender.css";
-// database
+//reducer
 import { useStateValue } from "../../utility/StateProvider";
+// database
 import firebase from "firebase";
 import db, { storage } from "../../utility/firebase";
 // material-ui icons
-import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import AddCommentIcon from "@material-ui/icons/AddComment";
 import { Button } from "@material-ui/core";
 
 function PostSender() {
-  
   const [input, setInput] = useState("");
-  const [imageURL, setImageUrl] = useState("");
   const [isUpload, setIsUpload] = useState(false);
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    db.collection("posts").add({
-        title: input,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        profilePic: "http://placeimg.com/640/480/fashion",
-        user: "Agnes",
-        photo: "http://placeimg.com/640/480/nature",
-        likes: [],
-    });
-    setInput("");
-    setImageUrl("");
-  };
   const handleClick = () => {
     setIsUpload(!isUpload);
   };
@@ -74,6 +60,7 @@ function PostSender() {
               setProgress(0);
               setInput("");
               setImage(null);
+              setIsUpload(false);
             });
         }
       );
@@ -81,11 +68,13 @@ function PostSender() {
       alert("Photo has not been selected!");
     }
   };
-//   const [{ user }, dispatch] = useStateValue();
   return (
     <div className="postSender">
-      <div className="postSender__addMessage" onClick={handleClick}>
-          <ChatBubbleIcon className="postSenedr__iconMessage"  style={{ fontSize: 56, color: isUpload ? "#f48fb1" : "#808080" }} />
+      <div className="postSender__addMessage" onClick={handleClick} title= "Add Post">
+        <AddCommentIcon
+          className="postSenedr__iconMessage"
+          style={{ fontSize: 72, color: isUpload ? "#da2e7e" : "#0095f6" }}
+        />
       </div>
       {isUpload && (
         <div className="postSender__uploadImage">
@@ -95,15 +84,24 @@ function PostSender() {
               value={progress}
               max="100"
             />
-            <input value={input} onChange={e => setInput(e.target.value)}/>
+            <input
+              className="postSender__textInput"
+              placeholder="add title... (optional)"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            />
             <div>
               <input
                 className="postSender__fileInput"
                 type="file"
                 onChange={handleChangeImage}
               />
-              <Button className="postSender__upload" >
-                Upload
+              <Button
+                className="postSender__upload"
+                onClick={handleUpload}
+                disabled={image ? false : true}
+              >
+                Send Post
               </Button>
             </div>
           </form>

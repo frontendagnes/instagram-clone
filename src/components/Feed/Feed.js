@@ -33,8 +33,6 @@ useEffect(() => {
                 title={post.data.title}
             />
         ))}
-
-http://placeimg.com/640/480/nature
             <Post 
                 key="123"
                 postId= "123"
