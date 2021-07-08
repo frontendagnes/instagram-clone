@@ -4,7 +4,9 @@
 .app {
   height: 100%;
 }
-
+.app__header{
+  height: 85px;
+}
 .app__conatiner{
   min-height: 100%;
   background-color: #fafafa;
@@ -13,5 +15,8 @@
 }
 .app__feed{
   margin-right: 20px;
-  flex: 0.4;
+  margin-bottom: 24px;
+}
+.app_sidebar{
+  width: 20%;
 }

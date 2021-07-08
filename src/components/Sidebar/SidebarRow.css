@@ -1,0 +1,18 @@
+.sidebarRow{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.sidebarRow__avatar{
+    /* width: 60px !important;
+    height: 60px !important;    */
+}
+.sidebarRow__user{
+    margin-left: 10px;
+}
+.sidebarRow__user > p:first-child{
+    font-weight: 600;
+}
+.sidebarRow__user > p:last-child{
+    color: #808080;
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Header.css";
 // icons material-ui
 import SearchIcon from "@material-ui/icons/Search";
@@ -6,9 +6,11 @@ import HomeIcon from "@material-ui/icons/Home";
 import SendIcon from "@material-ui/icons/Send";
 import ExploreIcon from "@material-ui/icons/Explore";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Avatar from "@material-ui/core/Avatar";
-
+import IconButton from "@material-ui/core/IconButton";
 function Header() {
+  const [input, setInput] = useState("");
   return (
     <div className="header">
       <div className="header__left">
@@ -20,25 +22,32 @@ function Header() {
       <div className="header__center">
         <div className="header__search">
           <SearchIcon fontSize="small" />
-          <input placeholder="Search..." />
+          <input
+            placeholder="Search..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
         </div>
       </div>
       <div className="header__right">
-        <div className="header__option">
-          <HomeIcon fontSize="large" />
-        </div>
-        <div className="header__option">
+        <IconButton className="header__option">
+          <HomeIcon fontSize="large" style={{ color: "black" }} />
+        </IconButton>
+        <IconButton className="header__option">
           <SendIcon fontSize="large" />
-        </div>
-        <div className="header__option">
+        </IconButton>
+        <IconButton className="header__option">
           <ExploreIcon fontSize="large" />
-        </div>
-        <div className="header__option">
+        </IconButton>
+        <IconButton className="header__option">
           <FavoriteBorderIcon fontSize="large" />
-        </div>
-        <div className="header__option header__avatar">
+        </IconButton>
+        <IconButton className="header__option">
           <Avatar src="http://placeimg.com/640/480/animals" />
-        </div>
+        </IconButton>
+        <IconButton className="header__option">
+          <ExitToAppIcon fontSize="large" />
+        </IconButton>
       </div>
     </div>
   );
