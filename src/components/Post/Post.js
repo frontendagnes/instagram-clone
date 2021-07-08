@@ -36,18 +36,18 @@ function Post({ user, postId, title, timestamp, photo, profilePic }) {
         <div className="post__options">
           <div className="post__optionsLeft">
             <IconButton className="post__option">
-              <FavoriteIcon fontSize="middle" />
+              <FavoriteIcon />
             </IconButton>
             <IconButton className="post__option">
-              <ChatBubbleIcon fontSize="middle" />
+              <ChatBubbleIcon  />
             </IconButton>
             <IconButton className="post__option">
-              <SendIcon fontSize="midle" />
+              <SendIcon  />
             </IconButton>
           </div>
           <div className="post__optionsRight">
             <IconButton className="post__option">
-              <BookmarkIcon fontSize="middle" />
+              <BookmarkIcon />
             </IconButton>
           </div>
         </div>

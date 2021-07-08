@@ -1,0 +1,11 @@
+.postSender{
+
+}
+.postSender__uploadImage{
+    background-color: #ffffff;
+    padding: 20px 30px;
+    color: #808080
+}
+.postSenedr__iconMessage{
+    cursor: pointer;
+}
