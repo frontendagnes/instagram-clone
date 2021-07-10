@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./Post.css";
 // components
 import Comment from "./Comment";
-//emoji picker
-// import Picker, { SKIN_TONE_MEDIUM_DARK } from 'emoji-picker-react';
+import { Picker } from "emoji-mart";
+// emoji mart
+import "emoji-mart/css/emoji-mart.css";
 //database
 import db from "../../utility/firebase";
 // material-ui icones
@@ -18,6 +19,7 @@ import Button from "@material-ui/core/Button";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 //database
 import { useStateValue } from "../../utility/StateProvider";
+import { red } from "@material-ui/core/colors";
 function Post({
   username,
   postId,
@@ -30,6 +32,7 @@ function Post({
   const [comment, setComment] = useState([]);
   const [input, setInput] = useState("");
   const [likes, setLikes] = useState([]);
+  const [isEmoji, setIsEmoji] = useState(false);
   const [{ user }, dispatch] = useStateValue();
 
   useEffect(() => {
@@ -80,14 +83,18 @@ function Post({
     });
     setLikes(newLike);
   };
+  const addEmoji = (e) => {
+    let emoji = e.native;
+    setInput(input + emoji);
+  };
   return (
     <div className="post">
       <div className="post__top">
         <div className="post__topLeft">
           <Avatar src={profilePic} />
           <div>
-          <p>{username}</p>
-          <small>{new Date(timestamp?.toDate()).toUTCString()}</small>
+            <p>{username}</p>
+            <small>{new Date(timestamp?.toDate()).toUTCString()}</small>
           </div>
         </div>
         <IconButton className="post__topRight">
@@ -102,9 +109,9 @@ function Post({
           <div className="post__optionsLeft">
             <IconButton className="post__option">
               {likes?.includes(user?.uid) ? (
-                <FavoriteIcon color="secondary" onClick={() => unLike()}/>
+                <FavoriteIcon color="secondary" onClick={() => unLike()} />
               ) : (
-                <FavoriteIcon onClick={() => like()}/>
+                <FavoriteIcon onClick={() => like()} />
               )}
             </IconButton>
             <IconButton className="post__option">
@@ -132,7 +139,18 @@ function Post({
             ))}
           </div>
           <div className="post__sender">
-            <InsertEmoticonIcon fontSize="large" />
+            <InsertEmoticonIcon
+              className="post__emojiButton"
+              fontSize="large"
+              onClick={() => setIsEmoji(!isEmoji)}
+              style={{ color: isEmoji ? "#f50057" : "#000000" }}
+            />
+            {isEmoji && (
+              <span>
+                <Picker onSelect={addEmoji} />
+              </span>
+            )}
+
             <input
               placeholder="add comment..."
               value={input}

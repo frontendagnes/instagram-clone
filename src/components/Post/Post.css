@@ -46,6 +46,16 @@
     display: flex;
     border-top: 1px solid #d3d3d3;
     padding: 10px 20px;
+    position: relative;
+}
+.post__sender > span{
+    position: absolute;
+    left: -1px;
+    top:60px;
+    z-index: 10;
+}
+.post__emojiButton{
+    cursor: pointer;
 }
 .post__sender > input{
     flex:1;
