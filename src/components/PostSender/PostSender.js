@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import "./PostSender.css";
-//reducer
-import { useStateValue } from "../../utility/StateProvider";
 // database
 import firebase from "firebase";
 import db, { storage } from "../../utility/firebase";
+import { useStateValue } from "../../utility/StateProvider";
 // material-ui icons
 import AddCommentIcon from "@material-ui/icons/AddComment";
 import { Button } from "@material-ui/core";
@@ -14,7 +13,7 @@ function PostSender() {
   const [isUpload, setIsUpload] = useState(false);
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
-
+  const [{ user }, dispatch] = useStateValue();
   const handleClick = () => {
     setIsUpload(!isUpload);
   };
@@ -52,8 +51,8 @@ function PostSender() {
               db.collection("posts").add({
                 title: input,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                profilePic: "http://placeimg.com/640/480/fashion",
-                user: "Agnes",
+                profilePic: user.photoURL,
+                user: user.displayName,
                 photo: url,
                 likes: [],
               });
@@ -73,7 +72,7 @@ function PostSender() {
       <div className="postSender__addMessage" onClick={handleClick} title= "Add Post">
         <AddCommentIcon
           className="postSenedr__iconMessage"
-          style={{ fontSize: 72, color: isUpload ? "#da2e7e" : "#0095f6" }}
+          style={{ fontSize: 72, color: isUpload ? "#f50057" : "#0095f6" }}
         />
       </div>
       {isUpload && (

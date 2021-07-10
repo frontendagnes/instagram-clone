@@ -1,15 +1,19 @@
 import React from "react";
 import "./Sidebar.css";
 import SidebarRow from "./SidebarRow.js";
+//database
+import { useStateValue } from "../../utility/StateProvider";
+
 function Sidebar() {
+  const [{ user }, dispatch] = useStateValue();
   return (
     <div className="sidebar">
       <div className="sidebar__top">
         {/* user */}
         <SidebarRow
-          profilePic="http://placeimg.com/640/480/technics"
-          nick="zabula81"
-          user="Agnieszka Kamińska"
+          profilePic={user?.photoURL}
+          nick= {user?.displayName}
+          user={user?.email}
           width= {60 +"px"}
           height={60 +"px"}
         />

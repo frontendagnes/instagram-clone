@@ -9,8 +9,16 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
+//database
+import { useStateValue } from "../../utility/StateProvider";
 function Header() {
   const [input, setInput] = useState("");
+  const [{ user }, dispatch] = useStateValue();
+  const logout = () => {
+    dispatch({
+      type: "DELETE_USER"
+    })
+  }
   return (
     <div className="header">
       <div className="header__left">
@@ -43,9 +51,9 @@ function Header() {
           <FavoriteBorderIcon fontSize="large" />
         </IconButton>
         <IconButton className="header__option">
-          <Avatar src="http://placeimg.com/640/480/animals" />
+          <Avatar src={user?.photoURL} />
         </IconButton>
-        <IconButton className="header__option">
+        <IconButton className="header__option" onClick={logout}>
           <ExitToAppIcon fontSize="large" />
         </IconButton>
       </div>

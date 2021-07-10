@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Post.css";
 // components
-import Comment from './Comment'
+import Comment from "./Comment";
 //emoji picker
 // import Picker, { SKIN_TONE_MEDIUM_DARK } from 'emoji-picker-react';
 //database
@@ -16,10 +16,25 @@ import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import SendIcon from "@material-ui/icons/Send";
 import Button from "@material-ui/core/Button";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
-
-function Post({ user, postId, title, timestamp, photo, profilePic }) {
+//database
+import { useStateValue } from "../../utility/StateProvider";
+function Post({
+  username,
+  postId,
+  title,
+  timestamp,
+  photo,
+  profilePic,
+  favorite,
+}) {
   const [comment, setComment] = useState([]);
   const [input, setInput] = useState("");
+  const [likes, setLikes] = useState([]);
+  const [{ user }, dispatch] = useStateValue();
+
+  useEffect(() => {
+    setLikes(favorite);
+  }, []);
 
   useEffect(() => {
     let comments;
@@ -38,23 +53,42 @@ function Post({ user, postId, title, timestamp, photo, profilePic }) {
     };
   }, [postId]);
 
-  const handlePostSender = (e) => {
+  const commentsSender = (e) => {
     e.preventDefault();
     if (comment) {
       db.collection("posts").doc(postId).collection("comments").add({
         comment: input,
-        user: "Agnes",
+        user: user.displayName,
         timestamp: Date.now(),
       });
     }
-    setInput('')
+    setInput("");
+  };
+
+  const like = () => {
+    let newLike = [...likes, user.uid];
+    db.collection("posts").doc(postId).update({
+      likes: newLike,
+    });
+    setLikes(newLike);
+  };
+
+  const unLike = () => {
+    let newLike = likes.filter((item) => item !== user.uid);
+    db.collection("posts").doc(postId).update({
+      likes: newLike,
+    });
+    setLikes(newLike);
   };
   return (
     <div className="post">
       <div className="post__top">
         <div className="post__topLeft">
           <Avatar src={profilePic} />
-          <p>{user}</p>
+          <div>
+          <p>{username}</p>
+          <small>{new Date(timestamp?.toDate()).toUTCString()}</small>
+          </div>
         </div>
         <IconButton className="post__topRight">
           <MoreHorizIcon fontSize="large" />
@@ -67,7 +101,11 @@ function Post({ user, postId, title, timestamp, photo, profilePic }) {
         <div className="post__options">
           <div className="post__optionsLeft">
             <IconButton className="post__option">
-              <FavoriteIcon />
+              {likes?.includes(user?.uid) ? (
+                <FavoriteIcon color="secondary" onClick={() => unLike()}/>
+              ) : (
+                <FavoriteIcon onClick={() => like()}/>
+              )}
             </IconButton>
             <IconButton className="post__option">
               <ChatBubbleIcon />
@@ -82,20 +120,16 @@ function Post({ user, postId, title, timestamp, photo, profilePic }) {
             </IconButton>
           </div>
         </div>
+        <div className="post__favorties">Number of likes: {likes?.length}</div>
         <div className="post__title">
-          <p>{title && user}</p>
+          <p>{title && username}</p>
           <p>{title}</p>
         </div>
         <div className="post__comment">
           <div className="post__comments">
-  
             {comment.map((item) => (
-              <Comment 
-                user={item.user}
-                comment={item.comment}
-              />
+              <Comment key={item.id} user={item.user} comment={item.comment} />
             ))}
-
           </div>
           <div className="post__sender">
             <InsertEmoticonIcon fontSize="large" />
@@ -104,7 +138,9 @@ function Post({ user, postId, title, timestamp, photo, profilePic }) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
             />
-            <Button disabled={input ? false : true} onClick={handlePostSender}>ADD</Button>
+            <Button disabled={input ? false : true} onClick={commentsSender}>
+              ADD
+            </Button>
           </div>
         </div>
       </div>

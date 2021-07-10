@@ -11,6 +11,9 @@
     top:0;
     z-index: 999;
 }
+.header__left > img{
+    object-fit: contain;
+}
 .header__search{
     display: flex;
     align-items: center;

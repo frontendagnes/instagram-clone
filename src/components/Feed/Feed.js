@@ -10,7 +10,8 @@ function Feed() {
 const [posts, setPosts] = useState([])
 
 useEffect(() => {
-    db.collection("posts")
+  let feedback
+  feedback = db.collection("posts")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         setPosts(
@@ -20,6 +21,9 @@ useEffect(() => {
           }))
         );
       });
+      return () => {
+        feedback();
+      };
   }, []);
     return (
         <div className="Feed">
@@ -28,27 +32,13 @@ useEffect(() => {
                 key={post.id}
                 postId={post.id}
                 profilePic={post.data.profilePic}
-                user={post.data.user}
+                username={post.data.user}
                 photo={post.data.photo}
                 title={post.data.title}
+                favorite={post.data.likes}
+                timestamp={post.data.timestamp}
             />
         ))}
-            <Post 
-                key="123"
-                postId= "123"
-                profilePic="http://placeimg.com/640/480/animals"
-                user="Agnieszka Kamińska"
-                photo="http://placeimg.com/640/480/animals"
-                title="Siema jestm ładnym zwierzaczkiem!"
-            /> 
-            <Post 
-                key= "124"
-                postId= "124"
-                profilePic="http://placeimg.com/640/480/sports"
-                user="AGNES"
-                photo="http://placeimg.com/640/480/sports"
-                title="Jestem bo jest a co Ci do tego :P"
-            /> 
         </div>
     )
 }
