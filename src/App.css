@@ -4,25 +4,20 @@
 .app {
   height: 100%;
 }
-.app__header{
-  height: 85px;
-}
-.app__conatiner{
+.app__wrapper{
+  position: relative;
   min-height: 100%;
   background-color: #fafafa;
   display: flex;
   justify-content: center;
-}
-.app__feed{
-  margin-right: 20px;
-  margin-bottom: 24px;
+  top: 60px
 }
 .app_sidebar{
   width: 20%;
 }
 
-.app__postSender{
-  position: fixed;
-  bottom: 0;
-  left: 0;
+@media (max-width: 800px) {
+  .app_sidebar{
+      display: none;
+  }
 }

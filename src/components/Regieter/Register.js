@@ -3,38 +3,35 @@ import "./Register.css";
 // materia-ui icons
 import { TextField, Button } from "@material-ui/core";
 //react-roter-dom
-import { useHistory, Link } from 'react-router-dom'
-// database
-import { auth } from '../../utility/firebase'
+import { useHistory, Link } from "react-router-dom";
+// API
+import { auth } from "../../utility/firebase";
 function Register() {
-    const history = useHistory();
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [userName, setUserName] = useState('')
-    const [photoUrl, setPhotoUrl] = useState('')
-    
-    const register = (e) => {
-        e.preventDefault()
-        auth
-        .createUserWithEmailAndPassword(email, password)
-        .then(function(result){
-            return result.user.updateProfile({
-                displayName: userName,
-                photoURL: photoUrl
-            })
-            
-        })
-        .then(() => {
-            history.push("/login");
-        //   if (auth) {
-        //   }
-        })
-        .catch((error) => console.log(error));
-        setEmail('')
-        setPassword('')
-        setUserName('')
-        setPhotoUrl('')
-    }
+  const history = useHistory();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("");
+
+  const register = (e) => {
+    e.preventDefault();
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(function (result) {
+        return result.user.updateProfile({
+          displayName: userName,
+          photoURL: photoUrl,
+        });
+      })
+      .then(() => {
+        history.push("/login");
+      })
+      .catch((error) => alert(error.message));
+    setEmail("");
+    setPassword("");
+    setUserName("");
+    setPhotoUrl("");
+  };
   return (
     <div className="register">
       <div className="register__wrapper">
@@ -50,7 +47,7 @@ function Register() {
             variant="outlined"
             type="text"
             value={userName}
-            onChange={e => setUserName(e.target.value)}
+            onChange={(e) => setUserName(e.target.value)}
           />
           <TextField
             className="register__input"
@@ -58,7 +55,7 @@ function Register() {
             variant="outlined"
             type="email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             className="register__input"
@@ -66,20 +63,24 @@ function Register() {
             variant="outlined"
             type="password"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
-        <TextField
+          <TextField
             className="register__input"
             label="url to avatar"
             variant="outlined"
             type="text"
             value={photoUrl}
-            onChange={e => setPhotoUrl(e.target.value)}
+            onChange={(e) => setPhotoUrl(e.target.value)}
           />
-          <Button type="submit" className="register__button">Create Acount</Button>
+          <Button type="submit" className="register__button">
+            Create Acount
+          </Button>
         </form>
       </div>
-      <div>Have an account? <Link to="/login">Sign In</Link></div>
+      <div>
+        Have an account? <Link to="/login">Sign In</Link>
+      </div>
     </div>
   );
 }

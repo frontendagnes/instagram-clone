@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 //components
 import Header from "./components/Header/Header";
@@ -8,17 +8,35 @@ import PostSender from "./components/PostSender/PostSender";
 import Login from "./components/Login/Login";
 import Register from "./components/Regieter/Register";
 // react-router-dom
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-//database
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+// API
 import { useStateValue } from "./utility/StateProvider";
+
 function App() {
   const [{ user }, dispatch] = useStateValue();
   useEffect(() => {
     console.log(user);
+  //   if(user){
+  //   let item = {
+  //     email: user.email,
+  //     displayName: user.displayName,
+  //     photoURL: user.photoURL
+  //   }
+
+  //   localStorage.setItem("loginUser", JSON.stringify(item))
+  // }
+
   }, [user]);
+
+
   return (
     <Router>
-     {!user ? <Redirect to="/login" /> : <Redirect to="/"/>}
+      {!user ? <Redirect to="/login" /> : <Redirect to="/" />}
       <div className="app">
         <Switch>
           <Route path="/register">
@@ -28,19 +46,13 @@ function App() {
             <Login />
           </Route>
           <Route path="/">
-            <div className="app__header">
-              <Header />
-            </div>
-            <div className="app__conatiner">
-              <div className="app__feed">
-                <Feed />
-              </div>
+            <Header />
+            <div className="app__wrapper">
+              <Feed />
               <div className="app_sidebar">
                 <Sidebar />
               </div>
-              <div className="app__postSender">
-                <PostSender />
-              </div>
+              <PostSender />
             </div>
           </Route>
         </Switch>

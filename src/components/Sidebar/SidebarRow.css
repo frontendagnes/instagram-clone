@@ -1,14 +1,17 @@
-.sidebarRow{
+.sidebarRow {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
-.sidebarRow__user{
+
+.sidebarRow__user {
     margin-left: 10px;
 }
-.sidebarRow__user > p:first-child{
+
+.sidebarRow__user>p:first-child {
     font-weight: 600;
 }
-.sidebarRow__user > p:last-child{
+
+.sidebarRow__user>p:last-child {
     color: #808080;
 }

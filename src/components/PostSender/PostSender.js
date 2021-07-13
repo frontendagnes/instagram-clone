@@ -6,13 +6,18 @@ import db, { storage } from "../../utility/firebase";
 import { useStateValue } from "../../utility/StateProvider";
 // material-ui icons
 import AddCommentIcon from "@material-ui/icons/AddComment";
+import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import { Button } from "@material-ui/core";
+// emoji mart
+import "emoji-mart/css/emoji-mart.css";
+import { Picker } from "emoji-mart";
 
 function PostSender() {
   const [input, setInput] = useState("");
   const [isUpload, setIsUpload] = useState(false);
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
+  const [isEmoji, setIsEmoji] = useState(false);
   const [{ user }, dispatch] = useStateValue();
   const handleClick = () => {
     setIsUpload(!isUpload);
@@ -60,6 +65,7 @@ function PostSender() {
               setInput("");
               setImage(null);
               setIsUpload(false);
+              isEmoji(false);
             });
         }
       );
@@ -67,9 +73,17 @@ function PostSender() {
       alert("Photo has not been selected!");
     }
   };
+  const addEmoji = (e) => {
+    let emoji = e.native;
+    setInput(input + emoji);
+  };
   return (
     <div className="postSender">
-      <div className="postSender__addMessage" onClick={handleClick} title= "Add Post">
+      <div
+        className="postSender__addMessage"
+        onClick={handleClick}
+        title="Add Post"
+      >
         <AddCommentIcon
           className="postSenedr__iconMessage"
           style={{ fontSize: 72, color: isUpload ? "#f50057" : "#0095f6" }}
@@ -83,12 +97,19 @@ function PostSender() {
               value={progress}
               max="100"
             />
-            <input
-              className="postSender__textInput"
-              placeholder="add title... (optional)"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-            />
+            <div className="postSender__textInput">
+              <input
+                className="postSender__input"
+                placeholder="add title... (optional)"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+              />
+              <InsertEmoticonIcon
+                className="postSender__emojiButton"
+                onClick={() => setIsEmoji(!isEmoji)}
+                style={{ color: isEmoji ? "#f50057" : "#808080" }}
+              />
+            </div>
             <div>
               <input
                 className="postSender__fileInput"
@@ -104,6 +125,11 @@ function PostSender() {
               </Button>
             </div>
           </form>
+          {isEmoji && (
+            <span className="postSendr__emoji">
+              <Picker onSelect={addEmoji} />
+            </span>
+          )}
         </div>
       )}
     </div>

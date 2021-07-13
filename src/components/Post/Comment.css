@@ -1,8 +1,9 @@
-.comment{
+.comment {
     display: flex;
     padding-left: 20px;
 }
-.comment__user{
+
+.comment__user {
     font-weight: 600;
     margin-right: 10px;
 }

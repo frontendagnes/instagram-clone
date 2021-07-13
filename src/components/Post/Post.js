@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./Post.css";
 // components
 import Comment from "./Comment";
-import { Picker } from "emoji-mart";
 // emoji mart
 import "emoji-mart/css/emoji-mart.css";
+import { Picker } from "emoji-mart";
 //database
 import db from "../../utility/firebase";
 // material-ui icones
@@ -19,7 +19,6 @@ import Button from "@material-ui/core/Button";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 //database
 import { useStateValue } from "../../utility/StateProvider";
-import { red } from "@material-ui/core/colors";
 function Post({
   username,
   postId,

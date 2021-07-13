@@ -1,7 +1,7 @@
 import React from "react";
 import "./Sidebar.css";
 import SidebarRow from "./SidebarRow.js";
-//database
+// API
 import { useStateValue } from "../../utility/StateProvider";
 
 function Sidebar() {
@@ -12,14 +12,14 @@ function Sidebar() {
         {/* user */}
         <SidebarRow
           profilePic={user?.photoURL}
-          nick= {user?.displayName}
+          nick={user?.displayName}
           user={user?.email}
-          width= {60 +"px"}
-          height={60 +"px"}
+          width={60 + "px"}
+          height={60 + "px"}
         />
       </div>
       <div className="sidebar__center">
-          <p>Suggestions for you</p>
+        <p>Suggestions for you</p>
         {/* suggestion */}
         <SidebarRow
           profilePic="http://placeimg.com/640/480/city"

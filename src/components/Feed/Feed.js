@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import './Feed.css'
+import React, { useEffect, useState } from "react";
+import "./Feed.css";
 //database
-import db from '../../utility/firebase'
+import db from "../../utility/firebase";
 //componets
-import Post from '../Post/Post'
+import Post from "../Post/Post";
 
 function Feed() {
+  const [posts, setPosts] = useState([]);
 
-const [posts, setPosts] = useState([])
-
-useEffect(() => {
-  let feedback
-  feedback = db.collection("posts")
+  useEffect(() => {
+    let feedback;
+    feedback = db
+      .collection("posts")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         setPosts(
@@ -21,26 +21,26 @@ useEffect(() => {
           }))
         );
       });
-      return () => {
-        feedback();
-      };
+    return () => {
+      feedback();
+    };
   }, []);
-    return (
-        <div className="Feed">
-        {posts.map((post) =>(
-            <Post 
-                key={post.id}
-                postId={post.id}
-                profilePic={post.data.profilePic}
-                username={post.data.user}
-                photo={post.data.photo}
-                title={post.data.title}
-                favorite={post.data.likes}
-                timestamp={post.data.timestamp}
-            />
-        ))}
-        </div>
-    )
+  return (
+    <div className="feed">
+      {posts.map((post) => (
+        <Post
+          key={post.id}
+          postId={post.id}
+          profilePic={post.data.profilePic}
+          username={post.data.user}
+          photo={post.data.photo}
+          title={post.data.title}
+          favorite={post.data.likes}
+          timestamp={post.data.timestamp}
+        />
+      ))}
+    </div>
+  );
 }
 
-export default Feed
+export default Feed;

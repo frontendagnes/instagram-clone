@@ -1,16 +1,25 @@
-.sidebar{
+.sidebar {
    min-height: 100%;
    position: fixed;
    top: 124px;
 }
-.sidebar__center{
+
+.sidebar__center {
    margin-top: 24px;
-   margin-bottom:24px;
+   margin-bottom: 24px;
 }
-.sidebar__center > p{
+
+.sidebar__center>p {
    padding-bottom: 20px;
    color: #808080;
 }
-.sidebar__bottom{
+
+.sidebar__bottom {
    color: #808080;
+}
+
+@media (max-width: 600px) {
+   .sidebar {
+      display: none;
+   }
 }

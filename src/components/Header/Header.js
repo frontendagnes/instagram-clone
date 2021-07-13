@@ -9,16 +9,16 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
-//database
+// API
 import { useStateValue } from "../../utility/StateProvider";
 function Header() {
   const [input, setInput] = useState("");
   const [{ user }, dispatch] = useStateValue();
   const logout = () => {
     dispatch({
-      type: "DELETE_USER"
-    })
-  }
+      type: "DELETE_USER",
+    });
+  };
   return (
     <div className="header">
       <div className="header__left">
@@ -38,22 +38,24 @@ function Header() {
         </div>
       </div>
       <div className="header__right">
-        <IconButton className="header__option">
-          <HomeIcon fontSize="large" style={{ color: "black" }} />
-        </IconButton>
-        <IconButton className="header__option">
-          <SendIcon fontSize="large" />
-        </IconButton>
-        <IconButton className="header__option">
-          <ExploreIcon fontSize="large" />
-        </IconButton>
-        <IconButton className="header__option">
-          <FavoriteBorderIcon fontSize="large" />
-        </IconButton>
+        <div className="header__options">
+          <IconButton className="header__option">
+            <HomeIcon fontSize="large" style={{ color: "black" }} />
+          </IconButton>
+          <IconButton className="header__option">
+            <SendIcon fontSize="large" />
+          </IconButton>
+          <IconButton className="header__option">
+            <ExploreIcon fontSize="large" />
+          </IconButton>
+          <IconButton className="header__option">
+            <FavoriteBorderIcon fontSize="large" />
+          </IconButton>
+        </div>
         <IconButton className="header__option">
           <Avatar src={user?.photoURL} />
         </IconButton>
-        <IconButton className="header__option" onClick={logout}>
+        <IconButton className="header__option" onClick={logout} title="Exit">
           <ExitToAppIcon fontSize="large" />
         </IconButton>
       </div>

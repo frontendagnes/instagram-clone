@@ -1,4 +1,4 @@
-.register{
+.register {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -6,13 +6,15 @@
     align-items: center;
     background-color: #fafafa;
 }
-.register__logo{
+
+.register__logo {
     object-fit: contain;
     width: 175px;
     height: 51px;
     margin-bottom: 20px;
 }
-.register__wrapper{
+
+.register__wrapper {
     background-color: #ffffff;
     padding: 20px 30px;
     width: 40%;
@@ -23,19 +25,25 @@
     border: 1px solid #d3d3d3;
 }
 
-.register form{
+.register form {
     display: flex;
     flex-direction: column;
 }
 
-.register__input{
+.register__input {
     margin-bottom: 10px !important;
     background-color: #fAFAFA;
 }
 
-.register__button{
+.register__button {
     background-color: #0095f6 !important;
     color: #ffffff !important;
     font-weight: 600 !important;
 
+}
+
+@media (max-width: 700px) {
+    .register__wrapper {
+        width: 90%;
+    }
 }

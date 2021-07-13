@@ -1,4 +1,11 @@
-.postSender__uploadImage{
+.postSender {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.postSender__uploadImage {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,15 +14,21 @@
     background-color: #ffffff;
     padding: 20px 30px;
     color: #808080;
-    width:100%;
-}
-.postSenedr__iconMessage{
-    cursor: pointer;
-}
-.postSender__progress{
     width: 100%;
 }
-.postSender__textInput{
+
+.postSenedr__iconMessage {
+    cursor: pointer;
+}
+
+.postSender__progress {
+    width: 100%;
+}
+
+.postSender__textInput {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     padding: 10px 20px;
     border-radius: 5px;
@@ -25,11 +38,29 @@
     margin-top: 10px;
     margin-bottom: 5px;
 }
-.postSender__uploadImage > form > div >button{
+
+.postSender__input {
+    flex: 1;
+    background-color: #ebebeb;
+    padding: 5px 5px;
+    border: transparent;
+    outline-width: 0;
+}
+
+.postSender__uploadImage>form>div>button {
     color: #0095f6;
     font-weight: 600;
 }
 
-.postSender__uploadImage > form > div >button:disabled{
+.postSender__uploadImage>form>div>button:disabled {
     color: #aad9f8;
+}
+
+.postSender__emojiButton {
+    cursor: pointer;
+}
+
+.postSendr__emoji {
+    position: absolute;
+    bottom: 120px;
 }
