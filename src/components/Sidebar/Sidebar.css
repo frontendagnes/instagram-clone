@@ -2,6 +2,7 @@
    min-height: 100%;
    position: fixed;
    top: 124px;
+   margin-left: 24px;
 }
 
 .sidebar__center {
