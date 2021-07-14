@@ -29,7 +29,7 @@ function Sidebar() {
         <SidebarRow
           profilePic="http://placeimg.com/640/480/nature"
           nick="misiek"
-          user="Mikołaj Stachera"
+          user="Mikołaj Stasiek"
         />
         <SidebarRow
           profilePic="http://placeimg.com/640/480/transport"

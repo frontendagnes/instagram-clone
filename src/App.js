@@ -19,21 +19,6 @@ import { useStateValue } from "./utility/StateProvider";
 
 function App() {
   const [{ user }, dispatch] = useStateValue();
-  useEffect(() => {
-    console.log(user);
-  //   if(user){
-  //   let item = {
-  //     email: user.email,
-  //     displayName: user.displayName,
-  //     photoURL: user.photoURL
-  //   }
-
-  //   localStorage.setItem("loginUser", JSON.stringify(item))
-  // }
-
-  }, [user]);
-
-
   return (
     <Router>
       {!user ? <Redirect to="/login" /> : <Redirect to="/" />}
