@@ -43,23 +43,25 @@ function Register() {
         <form onSubmit={register}>
           <TextField
             className="register__input"
-            label="nickname"
+            label="Enter nickname"
             variant="outlined"
             type="text"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
           <TextField
+            required
             className="register__input"
-            label="e-mail"
+            label="Enter e-mail"
             variant="outlined"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
+            required
             className="register__input"
-            label="password"
+            label="Enter password"
             variant="outlined"
             type="password"
             value={password}
@@ -67,12 +69,13 @@ function Register() {
           />
           <TextField
             className="register__input"
-            label="url to avatar"
+            label="Enter the avatar url"
             variant="outlined"
             type="text"
             value={photoUrl}
             onChange={(e) => setPhotoUrl(e.target.value)}
           />
+          
           <Button type="submit" className="register__button">
             Create Acount
           </Button>

@@ -37,16 +37,18 @@ function Login() {
         />
         <form onSubmit={signIn}>
           <TextField
+            required
             className="login__input"
-            label="login"
+            label={"Enter login"}
             variant="outlined"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
+            required
             className="login__input"
-            label="password"
+            label="Enter password"
             variant="outlined"
             type="password"
             value={password}
