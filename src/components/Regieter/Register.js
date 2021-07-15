@@ -6,15 +6,40 @@ import { TextField, Button } from "@material-ui/core";
 import { useHistory, Link } from "react-router-dom";
 // API
 import { auth } from "../../utility/firebase";
+//component
+import ValidationError from "../ValidatinError/ValidationError";
+
+const validate = (username, email, password) => {
+  if (username.length < 3) {
+    return "Too short nickname";
+  }
+  if (!email) {
+    return "E-mail is required";
+  } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) {
+    return "Invalid e-mail format";
+  }
+  if (!password) {
+    return "Password is required";
+  } else if (password.length < 6) {
+    return "The password must be 6 characters long";
+  }
+  return null;
+};
+
 function Register() {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
-
+  const [error, setError] = useState(null);
   const register = (e) => {
     e.preventDefault();
+    const errMsg = validate(userName, email, password);
+    if (errMsg) {
+      setError(errMsg);
+      return;
+    }
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(function (result) {
@@ -35,9 +60,8 @@ function Register() {
   return (
     <div className="register">
       <div className="register__wrapper">
-        <div className="register__logo">
-          SocialApp
-        </div>
+        {error && <ValidationError text={error} />}
+        <div className="register__logo">SocialApp</div>
         {/* <img
           className="register__logo"
           src="https://cdn2.downdetector.com/static/uploads/c/300/a3eac/Instagram_Logo_Large.png"
@@ -53,16 +77,13 @@ function Register() {
             onChange={(e) => setUserName(e.target.value)}
           />
           <TextField
-            required
             className="register__input"
             label="Enter e-mail"
             variant="outlined"
-            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
-            required
             className="register__input"
             label="Enter password"
             variant="outlined"
@@ -78,7 +99,7 @@ function Register() {
             value={photoUrl}
             onChange={(e) => setPhotoUrl(e.target.value)}
           />
-          
+
           <Button type="submit" className="register__button">
             Create Acount
           </Button>
