@@ -47,7 +47,7 @@ function Sidebar() {
           user="Damon Salvatore"
         />
       </div>
-      <div className="sidebar__bottom">&copy; 2021 FAKE Clone Instagram</div>
+      <div className="sidebar__bottom">&copy; 2021</div>
     </div>
   );
 }

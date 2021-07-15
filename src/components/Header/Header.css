@@ -13,8 +13,9 @@
     height: 60px;
 }
 
-.header__left>img {
-    object-fit: contain;
+.header__logo{
+    font-size: 24px;
+    font-weight: 600;
 }
 
 .header__search {

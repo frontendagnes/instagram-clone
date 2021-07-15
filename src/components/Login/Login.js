@@ -30,11 +30,14 @@ function Login() {
   return (
     <div className="login">
       <div className="login__wrapper">
-        <img
+        <div className="login__logo">
+          SocialApp
+        </div>
+        {/* <img
           className="login__logo"
           src="https://cdn2.downdetector.com/static/uploads/c/300/a3eac/Instagram_Logo_Large.png"
           alt=""
-        />
+        /> */}
         <form onSubmit={signIn}>
           <TextField
             required

@@ -8,10 +8,11 @@
 }
 
 .login__logo {
-    object-fit: contain;
     width: 175px;
     height: 51px;
     margin-bottom: 20px;
+    font-size: 36px;
+    font-weight: 600;
 }
 
 .login__wrapper {

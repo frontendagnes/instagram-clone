@@ -35,11 +35,14 @@ function Register() {
   return (
     <div className="register">
       <div className="register__wrapper">
-        <img
+        <div className="register__logo">
+          SocialApp
+        </div>
+        {/* <img
           className="register__logo"
           src="https://cdn2.downdetector.com/static/uploads/c/300/a3eac/Instagram_Logo_Large.png"
           alt=""
-        />
+        /> */}
         <form onSubmit={register}>
           <TextField
             className="register__input"

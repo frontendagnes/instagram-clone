@@ -1,4 +1,4 @@
-# Instagram Fake Clone
+# SocialApp / Instagram Fake Clone
 
 Klon Instagrama.  Logowanie za pomocą konta maila i hasła co za tym idzie posiada moduł rejestracji i logowania. Login i hasło dla sprawdzenie aplikacji: 
 

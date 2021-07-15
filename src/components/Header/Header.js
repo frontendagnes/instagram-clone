@@ -22,10 +22,13 @@ function Header() {
   return (
     <div className="header">
       <div className="header__left">
-        <img
+        <div className="header__logo">
+          SocialApp
+        </div>
+        {/* <img
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
           alt="Instagram Clone"
-        />
+        /> */}
       </div>
       <div className="header__center">
         <div className="header__search">
