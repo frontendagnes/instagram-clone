@@ -10,9 +10,6 @@ import { auth } from "../../utility/firebase";
 import ValidationError from "../ValidatinError/ValidationError";
 
 const validate = (username, email, password) => {
-  if (username.length < 3) {
-    return "Too short nickname";
-  }
   if (!email) {
     return "E-mail is required";
   } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) {
