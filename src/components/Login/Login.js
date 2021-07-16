@@ -8,9 +8,9 @@ import { useStateValue } from "../../utility/StateProvider";
 import { actionTypes } from "../../utility/reducer";
 // materia-ui icons
 import { TextField, Button } from "@material-ui/core";
-// componets
+// components
 import ValidationError from "../ValidatinError/ValidationError";
-const validate = (email, password) => {
+const validate = (email, password, test) => {
   if (!email) {
     return "E-mail is required";
   } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) {
@@ -19,6 +19,9 @@ const validate = (email, password) => {
   if (!password) {
     return "Password is required";
   }
+  if (test){
+    return "You have not passed the spam filter. Please refresh the page and try again";
+  }
   return null;
 };
 
@@ -26,17 +29,17 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-
+  // filtr antyspam
+  const [test, setTest] = useState("");
   const [state, dispatch] = useStateValue();
   const signIn = (e) => {
     e.preventDefault();
 
-    const errMsg = validate(email, password);
+    const errMsg = validate(email, password, test);
     if (errMsg) {
       setError(errMsg);
       return;
     }
-
     //firebase login
     auth
       .signInWithEmailAndPassword(email, password)
@@ -61,6 +64,7 @@ function Login() {
         /> */}
         <form onSubmit={signIn}>
           <TextField
+            autocomplete="off"
             className="login__input"
             label="Enter login"
             variant="outlined"
@@ -68,12 +72,22 @@ function Login() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
+            autocomplete="off"
             className="login__input"
             label="Enter password"
             variant="outlined"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+          />
+          {/* input antyspam */}
+          <input
+            autocomplete="off"
+            type="text"
+            name="age"
+            className="login__age"
+            value={test}
+            onChange={(e) => setTest(e.target.value)}
           />
           <Button type="submit" className="login__button">
             Log In

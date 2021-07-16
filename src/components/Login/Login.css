@@ -50,7 +50,10 @@
     padding: 20px 30px;
     border: 1px solid #d3d3d3;
 }
-
+/* input antyspam */
+.login__age{
+    display: none;
+}
 @media (max-width: 700px) {
     .login__wrapper {
         width: 90%;

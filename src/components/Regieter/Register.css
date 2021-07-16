@@ -40,9 +40,14 @@
     background-color: #0095f6 !important;
     color: #ffffff !important;
     font-weight: 600 !important;
-
 }
-
+.register__button:disabled{
+    background-color: #c1e4fc !important;
+}
+/* input antyspam */
+.register__age{
+    display: none;
+}
 @media (max-width: 700px) {
     .register__wrapper {
         width: 90%;

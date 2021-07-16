@@ -9,7 +9,7 @@ import { auth } from "../../utility/firebase";
 //component
 import ValidationError from "../ValidatinError/ValidationError";
 
-const validate = (username, email, password) => {
+const validate = (email, password, test) => {
   if (!email) {
     return "E-mail is required";
   } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) {
@@ -19,6 +19,9 @@ const validate = (username, email, password) => {
     return "Password is required";
   } else if (password.length < 6) {
     return "The password must be 6 characters long";
+  }
+  if (test) {
+    return "You have not passed the spam filter. Please refresh the page and try again";
   }
   return null;
 };
@@ -30,9 +33,11 @@ function Register() {
   const [userName, setUserName] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
   const [error, setError] = useState(null);
+  // filtr antyspam
+  const [test, setTest] = useState("");
   const register = (e) => {
     e.preventDefault();
-    const errMsg = validate(userName, email, password);
+    const errMsg = validate(email, password, test);
     if (errMsg) {
       setError(errMsg);
       return;
@@ -54,6 +59,7 @@ function Register() {
     setUserName("");
     setPhotoUrl("");
   };
+
   return (
     <div className="register">
       <div className="register__wrapper">
@@ -96,7 +102,15 @@ function Register() {
             value={photoUrl}
             onChange={(e) => setPhotoUrl(e.target.value)}
           />
-
+          {/* input antyspam */}
+          <input
+            autocomplete="off"
+            type="text"
+            name="age"
+            className="register__age"
+            value={test}
+            onChange={(e) => setTest(e.target.value)}
+          />
           <Button type="submit" className="register__button">
             Create Acount
           </Button>
