@@ -11,24 +11,19 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 // API
 import { useStateValue } from "../../utility/StateProvider";
+import { auth } from "../../utility/firebase";
 function Header() {
   const [input, setInput] = useState("");
   const [{ user }, dispatch] = useStateValue();
   const logout = () => {
-    dispatch({
-      type: "DELETE_USER",
-    });
+    if (user) {
+      auth.signOut();
+    }
   };
   return (
     <div className="header">
       <div className="header__left">
-        <div className="header__logo">
-          SocialApp
-        </div>
-        {/* <img
-          src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-          alt="Instagram Clone"
-        /> */}
+        <div className="header__logo">SocialApp</div>
       </div>
       <div className="header__center">
         <div className="header__search">

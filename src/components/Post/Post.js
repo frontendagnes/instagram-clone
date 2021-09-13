@@ -36,7 +36,7 @@ function Post({
 
   useEffect(() => {
     setLikes(favorite);
-  }, []);
+  }, [favorite]);
 
   useEffect(() => {
     let comments;

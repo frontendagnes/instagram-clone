@@ -4,8 +4,6 @@ import "./Login.css";
 import { Link } from "react-router-dom";
 // API
 import { auth } from "../../utility/firebase";
-import { useStateValue } from "../../utility/StateProvider";
-import { actionTypes } from "../../utility/reducer";
 // materia-ui icons
 import { TextField, Button } from "@material-ui/core";
 // components
@@ -19,7 +17,7 @@ const validate = (email, password, test) => {
   if (!password) {
     return "Password is required";
   }
-  if (test){
+  if (test) {
     return "You have not passed the spam filter. Please refresh the page and try again";
   }
   return null;
@@ -31,7 +29,7 @@ function Login() {
   const [error, setError] = useState(null);
   // filtr antyspam
   const [test, setTest] = useState("");
-  const [state, dispatch] = useStateValue();
+
   const signIn = (e) => {
     e.preventDefault();
 
@@ -43,12 +41,6 @@ function Login() {
     //firebase login
     auth
       .signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        dispatch({
-          type: actionTypes.SET_USER,
-          user: result.user,
-        });
-      })
       .catch((error) => alert(error.message));
   };
 
@@ -57,11 +49,6 @@ function Login() {
       <div className="login__wrapper">
         {error && <ValidationError text={error} />}
         <div className="login__logo">SocialApp</div>
-        {/* <img
-          className="login__logo"
-          src="https://cdn2.downdetector.com/static/uploads/c/300/a3eac/Instagram_Logo_Large.png"
-          alt=""
-        /> */}
         <form onSubmit={signIn}>
           <TextField
             autocomplete="off"
