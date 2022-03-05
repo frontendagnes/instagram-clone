@@ -46,8 +46,8 @@ Wszystkie pozostałe niezbędne informację znajdują się tutaj: [create-react-
 
 
 ## Contribute
-* Source Code: https://github.com/zabula81/instagram-clone
-* Issue Tracker: https://github.com/zabula81/instagram-clone/issues
+* Source Code: https://github.com/frontendagnes/instagram-clone
+* Issue Tracker: https://github.com/frontendagnes/instagram-clone/issues
 * View: https://social-app-bf925.web.app/
 
 ## Author
