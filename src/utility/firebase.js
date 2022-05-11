@@ -3,12 +3,12 @@ import "firebase/database";
 import "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyARCKrLRBzN-TrUWfznNZBQpCA_yWCeYxI",
-  authDomain: "social-app-bf925.firebaseapp.com",
-  projectId: "social-app-bf925",
-  storageBucket: "social-app-bf925.appspot.com",
-  messagingSenderId: "493200492982",
-  appId: "1:493200492982:web:f6bae31e74ade82f36d917",
+  apiKey: process.env.REACT_APP_APIKEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APPID,
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
