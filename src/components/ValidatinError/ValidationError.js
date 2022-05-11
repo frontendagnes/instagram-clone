@@ -1,7 +1,7 @@
 import React from "react";
 import "./ValidationError.css";
 // material-ui
-import ErrorIcon from "@material-ui/icons/Error";
+import ErrorIcon from "@mui/icons-material/Error";
 function ValidationError({ text }) {
   return (
     <div className="validationError">

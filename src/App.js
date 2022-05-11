@@ -8,14 +8,10 @@ import PostSender from "./components/PostSender/PostSender";
 import Login from "./components/Login/Login";
 import Register from "./components/Regieter/Register";
 // react-router-dom
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
-// API
+import { Route, Routes } from "react-router-dom";
+// state
 import { useStateValue } from "./utility/StateProvider";
+// api
 import { auth } from "./utility/firebase";
 function App() {
   const [{ user }, dispatch] = useStateValue();
@@ -35,29 +31,33 @@ function App() {
     });
   }, [dispatch]);
   return (
-    <Router>
-      {!user ? <Redirect to="/login" /> : <Redirect to="/" />}
-      <div className="app">
-        <Switch>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/">
-            <Header />
-            <div className="app__wrapper">
-              <Feed />
-              <div className="app_sidebar">
-                <Sidebar />
-              </div>
-              <PostSender />
-            </div>
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <div className="app">
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            <>
+              {user ? (
+                <>
+                  <Header />
+                  <div className="app__wrapper">
+                    <Feed />
+                    <div className="app_sidebar">
+                      <Sidebar />
+                    </div>
+                    <PostSender />
+                  </div>
+                </>
+              ) : (
+                <Login />
+              )}
+            </>
+          }
+        />
+      </Routes>
+    </div>
   );
 }
 

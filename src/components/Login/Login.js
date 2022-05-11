@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 // API
 import { auth } from "../../utility/firebase";
 // materia-ui icons
-import { TextField, Button } from "@material-ui/core";
+import Button from "@mui/material/Button"
+import TextField from "@mui/material/TextField"
 // components
 import ValidationError from "../ValidatinError/ValidationError";
 const validate = (email, password, test) => {

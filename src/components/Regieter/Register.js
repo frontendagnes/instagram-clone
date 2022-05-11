@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "./Register.css";
 // materia-ui icons
-import { TextField, Button } from "@material-ui/core";
+// import { TextField, Button } from "@material-ui/core";
+import Button from "@mui/material/Button"
+import TextField from "@mui/material/TextField"
 //react-roter-dom
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 // API
 import { auth } from "../../utility/firebase";
 //component
@@ -27,7 +29,7 @@ const validate = (email, password, test) => {
 };
 
 function Register() {
-  const history = useHistory();
+  const history = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
