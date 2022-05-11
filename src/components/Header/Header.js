@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import "./Header.css";
-// icons material-ui
-import SearchIcon from "@material-ui/icons/Search";
-import HomeIcon from "@material-ui/icons/Home";
-import SendIcon from "@material-ui/icons/Send";
-import ExploreIcon from "@material-ui/icons/Explore";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
+// mui
+import SearchIcon from "@mui/icons-material/Search";
+import HomeIcon from "@mui/icons-material/Home";
+import SendIcon from "@mui/icons-material/Send";
+import ExploreIcon from "@mui/icons-material/Explore";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
 // API
 import { useStateValue } from "../../utility/StateProvider";
 import { auth } from "../../utility/firebase";
 function Header() {
   const [input, setInput] = useState("");
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
   const logout = () => {
     if (user) {
       auth.signOut();
@@ -36,26 +37,28 @@ function Header() {
         </div>
       </div>
       <div className="header__right">
-        <div className="header__options">
+        <Stack direction="row" spacing={2} className="header__options">
           <IconButton className="header__option">
-            <HomeIcon fontSize="large" style={{ color: "black" }} />
+            <HomeIcon fontSize="large" sx={{ color: "#000000" }} />
           </IconButton>
           <IconButton className="header__option">
-            <SendIcon fontSize="large" />
+            <SendIcon fontSize="large" sx={{ color: "#707070" }} />
           </IconButton>
           <IconButton className="header__option">
-            <ExploreIcon fontSize="large" />
+            <ExploreIcon fontSize="large" sx={{ color: "#707070" }} />
           </IconButton>
           <IconButton className="header__option">
-            <FavoriteBorderIcon fontSize="large" />
+            <FavoriteBorderIcon fontSize="large" sx={{ color: "#707070" }} />
           </IconButton>
-        </div>
-        <IconButton className="header__option">
-          <Avatar src={user?.photoURL} />
-        </IconButton>
-        <IconButton className="header__option" onClick={logout} title="Exit">
-          <ExitToAppIcon fontSize="large" />
-        </IconButton>
+        </Stack>
+        <Stack direction="row" spacing={2} marginLeft="20px">
+          <IconButton className="header__option">
+            <Avatar src={user?.photoURL} />
+          </IconButton>
+          <IconButton className="header__option" onClick={logout} title="Exit">
+            <ExitToAppIcon fontSize="large" sx={{ color: "#707070" }} />
+          </IconButton>
+        </Stack>
       </div>
     </div>
   );

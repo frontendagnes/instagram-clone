@@ -5,9 +5,9 @@ import firebase from "firebase";
 import db, { storage } from "../../utility/firebase";
 import { useStateValue } from "../../utility/StateProvider";
 // material-ui icons
-import AddCommentIcon from "@material-ui/icons/AddComment";
-import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
-import { Button } from "@material-ui/core";
+import AddCommentIcon from '@mui/icons-material/AddComment';
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
+import Button from "@mui/material/Button";
 // emoji mart
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
@@ -18,7 +18,7 @@ function PostSender() {
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
   const [isEmoji, setIsEmoji] = useState(false);
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
   const handleClick = () => {
     setIsUpload(!isUpload);
   };
@@ -65,7 +65,7 @@ function PostSender() {
               setInput("");
               setImage(null);
               setIsUpload(false);
-              isEmoji(false);
+              setIsEmoji(false)
             });
         }
       );

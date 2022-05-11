@@ -38,6 +38,13 @@
     justify-content: space-between;
 }
 
+.post__option {
+    /* mui element */
+    padding: 8px !important;
+    border-radius: 50% !important;
+    margin-left: -5px !important;
+}
+
 .post__title {
     display: flex;
     align-items: center;

@@ -7,17 +7,18 @@ import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
 //database
 import db from "../../utility/firebase";
-// material-ui icones
-import Avatar from "@material-ui/core/Avatar";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import BookmarkIcon from "@material-ui/icons/Bookmark";
-import IconButton from "@material-ui/core/IconButton";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
-import SendIcon from "@material-ui/icons/Send";
-import Button from "@material-ui/core/Button";
-import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
-//database
+// mui
+import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
+import IconButton from "@mui/material/IconButton";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+import SendIcon from "@mui/icons-material/Send";
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
+//state
 import { useStateValue } from "../../utility/StateProvider";
 function Post({
   username,
@@ -32,7 +33,7 @@ function Post({
   const [input, setInput] = useState("");
   const [likes, setLikes] = useState([]);
   const [isEmoji, setIsEmoji] = useState(false);
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
 
   useEffect(() => {
     setLikes(favorite);
@@ -86,6 +87,7 @@ function Post({
     let emoji = e.native;
     setInput(input + emoji);
   };
+
   return (
     <div className="post">
       <div className="post__top">
@@ -105,26 +107,28 @@ function Post({
       </div>
       <div className="post__bottom">
         <div className="post__options">
-          <div className="post__optionsLeft">
+          <Stack className="post__optionsLeft" direction="row" spacing={2}>
+            {likes?.includes(user?.uid) ? (
+              <IconButton className="post__option" onClick={() => unLike()}>
+                <FavoriteIcon color="secondary" />
+              </IconButton>
+            ) : (
+              <IconButton className="post__option" onClick={() => like()}>
+                <FavoriteIcon sx={{ color: "#707070" }} />
+              </IconButton>
+            )}
             <IconButton className="post__option">
-              {likes?.includes(user?.uid) ? (
-                <FavoriteIcon color="secondary" onClick={() => unLike()} />
-              ) : (
-                <FavoriteIcon onClick={() => like()} />
-              )}
+              <ChatBubbleIcon sx={{ color: "#707070" }} />
             </IconButton>
             <IconButton className="post__option">
-              <ChatBubbleIcon />
+              <SendIcon sx={{ color: "#707070" }} />
             </IconButton>
+          </Stack>
+          <Stack className="post__optionsRight">
             <IconButton className="post__option">
-              <SendIcon />
+              <BookmarkIcon sx={{ color: "#707070" }} />
             </IconButton>
-          </div>
-          <div className="post__optionsRight">
-            <IconButton className="post__option">
-              <BookmarkIcon />
-            </IconButton>
-          </div>
+          </Stack>
         </div>
         <div className="post__favorties">Number of likes: {likes?.length}</div>
         <div className="post__title">
@@ -141,7 +145,9 @@ function Post({
             <InsertEmoticonIcon
               className="post__emojiButton"
               fontSize="large"
-              onClick={() => setIsEmoji(!isEmoji)}
+              onClick={() => {
+                setIsEmoji(!isEmoji);
+              }}
               style={{ color: isEmoji ? "#f50057" : "#000000" }}
             />
             {isEmoji && (
@@ -155,7 +161,11 @@ function Post({
               value={input}
               onChange={(e) => setInput(e.target.value)}
             />
-            <Button disabled={input ? false : true} onClick={commentsSender}>
+            <Button
+              type="button"
+              disabled={input ? false : true}
+              onClick={commentsSender}
+            >
               ADD
             </Button>
           </div>

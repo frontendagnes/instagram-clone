@@ -1,11 +1,12 @@
 import React from "react";
 import "./Sidebar.css";
+//component
 import SidebarRow from "./SidebarRow.js";
 // API
 import { useStateValue } from "../../utility/StateProvider";
 
 function Sidebar() {
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
   return (
     <div className="sidebar">
       <div className="sidebar__top">

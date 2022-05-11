@@ -51,7 +51,7 @@ function Login() {
         <div className="login__logo">SocialApp</div>
         <form onSubmit={signIn}>
           <TextField
-            autocomplete="off"
+            autoComplete="off"
             className="login__input"
             label="Enter login"
             variant="outlined"
@@ -59,7 +59,7 @@ function Login() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
-            autocomplete="off"
+            autoComplete="off"
             className="login__input"
             label="Enter password"
             variant="outlined"
@@ -69,7 +69,7 @@ function Login() {
           />
           {/* input antyspam */}
           <input
-            autocomplete="off"
+            autoComplete="off"
             type="text"
             name="age"
             className="login__age"

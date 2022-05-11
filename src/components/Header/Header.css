@@ -13,7 +13,7 @@
     height: 60px;
 }
 
-.header__logo{
+.header__logo {
     font-size: 24px;
     font-weight: 600;
 }
@@ -37,13 +37,14 @@
     background-color: #fafafa;
 }
 
-.header__right,
-.header__options {
+.header__right {
     display: flex;
 }
 
 .header__option {
-    padding-left: 24px;
+    /* mui element */
+    border-radius: 50% !important;
+    padding: 10px !important;
 }
 
 @media (max-width: 600px) {
@@ -59,7 +60,7 @@
 
 @media (max-width: 500px) {
     .header__options {
-        display: none;
+        display: none !important;
     }
 
 }
