@@ -6,7 +6,15 @@ import Comment from "./Comment";
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
 //database
-import db from "../../utility/firebase";
+import db, {
+  doc,
+  query,
+  collection,
+  onSnapshot,
+  orderBy,
+  setDoc,
+  addDoc,
+} from "../../utility/firebase";
 // mui
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
@@ -40,48 +48,75 @@ function Post({
   }, [favorite]);
 
   useEffect(() => {
-    let comments;
     if (postId) {
-      comments = db
-        .collection("posts")
-        .doc(postId)
-        .collection("comments")
-        .orderBy("timestamp", "asc")
-        .onSnapshot((snapshot) => {
-          setComment(snapshot.docs.map((doc) => doc.data()));
-        });
+      const docRef = doc(db, "posts", postId);
+      const ref = collection(docRef, "comments");
+      const sortRef = query(ref, orderBy("timestamp", "desc"));
+      const unsuscribe = onSnapshot(sortRef, (snapshot) => {
+        setComment(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+        );
+      });
+      return () => {
+        unsuscribe();
+      };
     }
-    return () => {
-      comments();
-    };
   }, [postId]);
 
-  const commentsSender = (e) => {
+  const commentsSender = async (e) => {
     e.preventDefault();
     if (comment) {
-      db.collection("posts").doc(postId).collection("comments").add({
+      const docRef = doc(db, "posts", postId);
+      const ref = collection(docRef, "comments");
+      await addDoc(ref, {
         comment: input,
         user: user.displayName,
         timestamp: Date.now(),
-      });
+      })
+        .then(() => {
+          setInput("");
+        })
+        .catch((error) => console.log("add coment error>>", error.message));
     }
-    setInput("");
   };
 
-  const like = () => {
+  const like = async () => {
     let newLike = [...likes, user.uid];
-    db.collection("posts").doc(postId).update({
-      likes: newLike,
-    });
-    setLikes(newLike);
+    const refDoc = doc(db, "posts", postId);
+    await setDoc(
+      refDoc,
+      {
+        likes: newLike,
+      },
+      { merge: true }
+    )
+      .then(() => {
+        setLikes(newLike);
+      })
+      .catch((error) => {
+        console.error("Like Error>>", error.message);
+      });
   };
 
-  const unLike = () => {
-    let newLike = likes.filter((item) => item !== user.uid);
-    db.collection("posts").doc(postId).update({
-      likes: newLike,
-    });
-    setLikes(newLike);
+  const unLike = async () => {
+    let filterItem = likes.filter((item) => item !== user.uid);
+    const refDoc = doc(db, "posts", postId);
+    await setDoc(
+      refDoc,
+      {
+        likes: filterItem,
+      },
+      { merge: true }
+    )
+      .then(() => {
+        setLikes(filterItem);
+      })
+      .catch((error) => {
+        console.error("Dislike Error>>", error.message);
+      });
   };
   const addEmoji = (e) => {
     let emoji = e.native;
@@ -138,7 +173,11 @@ function Post({
         <div className="post__comment">
           <div className="post__comments">
             {comment.map((item) => (
-              <Comment key={item.id} user={item.user} comment={item.comment} />
+              <Comment
+                key={item.id}
+                user={item.data.user}
+                comment={item.data.comment}
+              />
             ))}
           </div>
           <div className="post__sender">
@@ -166,7 +205,7 @@ function Post({
               disabled={input ? false : true}
               onClick={commentsSender}
             >
-              ADD
+              add
             </Button>
           </div>
         </div>

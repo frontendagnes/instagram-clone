@@ -3,7 +3,9 @@
     bottom: 0;
     left: 0;
 }
-
+.postSender form{
+    margin-bottom: 60px;
+}
 .postSender__uploadImage {
     position: relative;
     display: flex;
@@ -16,7 +18,9 @@
     color: #808080;
     width: 100%;
 }
-
+.postSender__addMessage{
+    /* margin-bottom: 50px; */
+}
 .postSenedr__iconMessage {
     cursor: pointer;
 }
@@ -64,3 +68,4 @@
     position: absolute;
     bottom: 120px;
 }
+

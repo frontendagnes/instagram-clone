@@ -12,12 +12,13 @@ import { Route, Routes } from "react-router-dom";
 // state
 import { useStateValue } from "./utility/StateProvider";
 // api
-import { auth } from "./utility/firebase";
+import { auth, onAuthStateChanged } from "./utility/firebase";
+import CookieConsent from "react-cookie-consent";
 function App() {
   const [{ user }, dispatch] = useStateValue();
 
   useEffect(() => {
-    auth.onAuthStateChanged((authUser) => {
+    onAuthStateChanged(auth, (authUser) => {
       if (authUser) {
         dispatch({
           type: "SET_USER",
@@ -57,6 +58,7 @@ function App() {
           }
         />
       </Routes>
+      <CookieConsent location="bottom" cookieName="app-cookie" expires={7}>This website uses cookies to enhance the user experience.</CookieConsent>
     </div>
   );
 }

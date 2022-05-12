@@ -12,13 +12,13 @@ import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 // API
 import { useStateValue } from "../../utility/StateProvider";
-import { auth } from "../../utility/firebase";
+import { auth, signOut } from "../../utility/firebase";
 function Header() {
   const [input, setInput] = useState("");
   const [{ user }] = useStateValue();
   const logout = () => {
     if (user) {
-      auth.signOut();
+      signOut(auth);
     }
   };
   return (

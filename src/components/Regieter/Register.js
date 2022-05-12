@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import "./Register.css";
-// materia-ui icons
-// import { TextField, Button } from "@material-ui/core";
-import Button from "@mui/material/Button"
-import TextField from "@mui/material/TextField"
+// material-ui icons
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 //react-roter-dom
 import { useNavigate, Link } from "react-router-dom";
 // API
-import { auth } from "../../utility/firebase";
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "../../utility/firebase";
 //component
 import ValidationError from "../ValidatinError/ValidationError";
 
@@ -44,16 +47,15 @@ function Register() {
       setError(errMsg);
       return;
     }
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(function (result) {
-        return result.user.updateProfile({
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        updateProfile(auth.currentUser, {
           displayName: userName,
           photoURL: photoUrl,
         });
       })
       .then(() => {
-        history.push("/login");
+        history("/login");
       })
       .catch((error) => alert(error.message));
     setEmail("");
@@ -106,7 +108,7 @@ function Register() {
           />
           {/* input antyspam */}
           <input
-            autocomplete="off"
+            autoComplete="off"
             type="text"
             name="age"
             className="register__age"

@@ -1,6 +1,31 @@
-import firebase from "firebase";
-import "firebase/database";
-import "firebase/storage";
+import { initializeApp } from "firebase/app";
+import {
+  getFirestore,
+  onSnapshot,
+  collection,
+  doc,
+  orderBy,
+  query,
+  setDoc,
+  addDoc,
+  serverTimestamp,
+} from "firebase/firestore";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  getAuth,
+  onAuthStateChanged,
+  signOut,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile
+} from "firebase/auth";
+import {
+  getStorage,
+  ref,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_APIKEY,
@@ -11,11 +36,32 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_APPID,
 };
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
-const db = firebaseApp.firestore();
-const auth = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
-const storage = firebase.storage();
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+const auth = getAuth(firebaseApp);
+const provider = new GoogleAuthProvider(firebaseApp);
+const storage = getStorage(firebaseApp);
 
-export { auth, provider, storage };
+export {
+  auth,
+  provider,
+  storage,
+  onAuthStateChanged,
+  serverTimestamp,
+  ref,
+  getDownloadURL,
+  uploadBytesResumable,
+  collection,
+  orderBy,
+  query,
+  onSnapshot,
+  doc,
+  setDoc,
+  addDoc,
+  signOut,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  signInWithPopup,
+};
 export default db;

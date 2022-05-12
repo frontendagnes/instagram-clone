@@ -3,10 +3,17 @@ import "./Login.css";
 // react-router-dom
 import { Link } from "react-router-dom";
 // API
-import { auth } from "../../utility/firebase";
+import {
+  auth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  provider,
+} from "../../utility/firebase";
 // materia-ui icons
-import Button from "@mui/material/Button"
-import TextField from "@mui/material/TextField"
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+
+import GoogleButton from "react-google-button";
 // components
 import ValidationError from "../ValidatinError/ValidationError";
 const validate = (email, password, test) => {
@@ -40,15 +47,22 @@ function Login() {
       return;
     }
     //firebase login
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .catch((error) => alert(error.message));
+    signInWithEmailAndPassword(auth, email, password).catch((error) =>
+      alert(error.message)
+    );
   };
-
+  const loginWithGoogle = (e) => {
+    e.preventDefault();
+    signInWithPopup(auth, provider).catch((error) =>
+      console.log("Login Google Error>>", error.message)
+    );
+  };
   return (
     <div className="login">
-      <div className="login__wrapper">
+      <div className="login__error">
         {error && <ValidationError text={error} />}
+      </div>
+      <div className="login__wrapper">
         <div className="login__logo">SocialApp</div>
         <form onSubmit={signIn}>
           <TextField
@@ -77,9 +91,12 @@ function Login() {
             value={test}
             onChange={(e) => setTest(e.target.value)}
           />
+          
           <Button type="submit" className="login__button">
             Log In
           </Button>
+          <div className="login__comma">OR</div>
+          <GoogleButton type="light" onClick={loginWithGoogle} />
         </form>
       </div>
       <div className="login__infoRegister">

@@ -1,11 +1,18 @@
-                                                                                                                                                                                                                            import React, { useState } from "react";
+import React, { useState } from "react";
 import "./PostSender.css";
 // database
-import firebase from "firebase";
-import db, { storage } from "../../utility/firebase";
+import db, {
+  storage,
+  serverTimestamp,
+  addDoc,
+  collection,
+  ref,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "../../utility/firebase";
 import { useStateValue } from "../../utility/StateProvider";
 // material-ui icons
-import AddCommentIcon from '@mui/icons-material/AddComment';
+import AddCommentIcon from "@mui/icons-material/AddComment";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import Button from "@mui/material/Button";
 // emoji mart
@@ -19,6 +26,7 @@ function PostSender() {
   const [progress, setProgress] = useState(0);
   const [isEmoji, setIsEmoji] = useState(false);
   const [{ user }] = useStateValue();
+
   const handleClick = () => {
     setIsUpload(!isUpload);
   };
@@ -30,49 +38,45 @@ function PostSender() {
   };
   const handleUpload = (e) => {
     e.preventDefault();
-    if (image) {
-      const uploadTask = storage.ref(`images/${image.name}`).put(image);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          setProgress(progress);
-        },
-        (error) => {
-          //error function...
-          console.log(error);
-          alert(error.message);
-        },
-        () => {
-          //complete function...
-          storage
-            .ref("images")
-            .child(image.name)
-            .getDownloadURL()
-            .then((url) => {
-              //post image insiade db
-              db.collection("posts").add({
-                title: input,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                profilePic: user.photoURL,
-                user: user.displayName,
-                photo: url,
-                likes: [],
-              });
-              setProgress(0);
-              setInput("");
-              setImage(null);
-              setIsUpload(false);
-              setIsEmoji(false)
-            });
-        }
-      );
-    } else {
-      alert("Photo has not been selected!");
-    }
+    if (!image) return;
+
+    const storageRef = ref(storage, `images/${image.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, image);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progress);
+      },
+      (error) => {
+        //error function...
+        console.log(error);
+        alert(error.message);
+      },
+      () => {
+        //complete function...
+        getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+          await addDoc(collection(db, "posts"), {
+            title: input,
+            timestamp: serverTimestamp(),
+            profilePic: user.photoURL,
+            user: user.displayName,
+            photo: url,
+            likes: [],
+          }).catch((error) => console.log("post send error>>>", error.message));
+        });
+        setProgress(0);
+        setInput("");
+        setImage(null);
+        setIsUpload(false);
+        setIsEmoji(false);
+      }
+    );
   };
+
   const addEmoji = (e) => {
     let emoji = e.native;
     setInput(input + emoji);
@@ -83,6 +87,7 @@ function PostSender() {
         className="postSender__addMessage"
         onClick={handleClick}
         title="Add Post"
+        style={{ marginBottom: !isUpload ? "100px" : "0" }}
       >
         <AddCommentIcon
           className="postSenedr__iconMessage"
